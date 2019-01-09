@@ -11,51 +11,23 @@ class Main extends Component {
   
   private static readonly NUMBER_OF_WEIGHTS = 3; // should be the same as how many coordinated we have in a point: x,y + bias
   private static readonly NUMBER_OF_POINTS = 300; 
-
   private canvas: Canvas;
   private perceptron: Perceptron;
-
   private points: Point[] = [];
-
   private lineWeightForX: number = -1;
   private lineWeightForY: number = -1;
 
   constructor(props: {}) {
     super(props);
-    this.canvas = new Canvas(React.createRef<HTMLCanvasElement>(), 640, 640);    
-    this.setLineWeights();
-    
-    // we will have only 1 perceptron
-    this.perceptron = new Perceptron(Main.NUMBER_OF_WEIGHTS); 
-
-    // and 1 point which we want to find out the value
+    this.canvas = new Canvas(React.createRef<HTMLCanvasElement>(), 640, 640); // size of the canvas is 640x640
+    this.setRandomInitialWeightsForFunctionLine();
+    this.perceptron = new Perceptron(Main.NUMBER_OF_WEIGHTS);  // we will have only 1 perceptron
     this.points = this.createPoints(Main.NUMBER_OF_POINTS, this.canvas);    
-  }
-
-  private setLineWeights(): void {
-    this.lineWeightForX = math.getRandomFloat(-0.9,0.9);
-    if(this.lineWeightForX === 0) {
-      this.lineWeightForX = 0.3;
-    }
-    this.lineWeightForY = math.getRandomFloat(-0.9,0.9);
-    if(this.lineWeightForY === 0) {
-      this.lineWeightForY = 0.3;
-    }
   }
 
   componentDidMount() {    
     this.redrawCanvas();
-    this.animateTraining();
-  }
-
-  private animateTraining() {
-    const train = this.trainPerceptorAndRepaintAllPoints;
-    const i = setInterval(()=>{
-      train();
-    },300);
-    setTimeout(()=> {
-      clearInterval(i);
-    },10000);
+    this.animateTrainingFor10Seconds();
   }
 
   private drawAllPoints(): void {
@@ -111,13 +83,14 @@ class Main extends Component {
   }
 
   private drawCardesianLines() {
+    const grey = '#DDD';
     const start: Coordinate = new Coordinate(-1, 0);
     const end: Coordinate = new Coordinate(1, 0);
-    this.canvas.drawLine(start, end, '#DDD');
+    this.canvas.drawLine(start, end, grey);
  
     const start2: Coordinate = new Coordinate(0,1);
     const end2: Coordinate = new Coordinate(0, -1);
-    this.canvas.drawLine(start2, end2, '#DDD');
+    this.canvas.drawLine(start2, end2, grey);
   }
 
   private clearCanvas() {
@@ -129,15 +102,44 @@ class Main extends Component {
     const end: Coordinate = new Coordinate(1,this.guessfunctionFromPerceptronFromWeights(1));
     this.canvas.drawLine(start, end, 'black');
   }
+
+  private animateTrainingFor10Seconds() {
+    const train = this.trainPerceptorAndRepaintAllPoints;
+    const interval = setInterval(train,300);
+    setTimeout(()=> { clearInterval(interval); },10000);
+  }
+
+  private setRandomInitialWeightsForFunctionLine(): void {
+    this.lineWeightForX = math.getRandomFloat(-0.9,0.9);
+    if(this.lineWeightForX === 0) {
+      this.lineWeightForX = 0.3;
+    }
+    this.lineWeightForY = math.getRandomFloat(-0.9,0.9);
+    if(this.lineWeightForY === 0) {
+      this.lineWeightForY = 0.3;
+    }
+  }
   
   render() {
     return (
       <div className="App">
-        <h1>This is demo describing perceptron</h1>
-        <h3>Points below line should have a value -1 and abowe should have value 1</h3>
-        <h4>If the prefiction of the perceptron is false, then point will have red color, otherwise will be green</h4>
-        <h4>Division line is for {this.functionForLine.toString()}</h4>
-        <h4>orange is division line, black is the expected line</h4>        
+        <h1>This is demo describing how a perceptron in neural networks work</h1>
+        <p>There are many point on the canvas. Some of them have positive value and some negative.
+          Value depends whether a point is above or below a yellow random line crossing the canvas.
+        </p>
+        <p>
+          We are going to train a perceptron to find out when the value of the point is positive and when not. 
+          Points at the begining are grey. 
+          <ul>
+            <li>When perceptron correctly finds out that point had positive value, then 
+          the color of the point will be green.</li>  
+            <li>When the perceptring finds out that the point has a negative value,
+           then the color will be red.  </li>  
+          </ul> 
+          <p>Black line is showing what perceptron thinks (that where could be the yellow line).
+            Training will last 10 seconds
+          </p>
+        </p>  
         <canvas 
           id="myCanvas" 
           width={this.canvas.getDimentions().width} 
