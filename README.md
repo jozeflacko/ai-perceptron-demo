@@ -1,17 +1,16 @@
 # Perceptron Demo
 
-This is a demo project describing how perceptron in neural networks is working.
-This project is written in react and typescript
+This is a demo project describing how perceptron in Neural Networks works.
+This project is written in React and TypeScript
 
 What is this demo doing:
-There are many point on the canvas. Some of them have positive value and some negative.
-Value depends whether a point is above or below a yellow random line crossing the canvas.
+There are many points on the canvas. Some of them have positive value and some negative value.
+Value of each perceptron depends whether its position is above or below a yellow line.
 
-We are going to train a perceptron to find out when the value of the point is positive and when not. Points at the begining are grey. 
-When perceptron correctly finds out that point had positive value, then the color of the point will be green.
-When the perceptring finds out that the point has a negative value,then the color will be red.  
-Black line is showing what perceptron thinks (that where could be the yellow line).
-Training will last 10 seconds
+We are going to train exactly 1 perceptron for about 10 seconds. Task of this perceptron is to find whether point has positive or negative value. Points at the begining are grey. 
+When perceptron correctly finds out that point has positive value, color of the point will change to green.
+When the perceptron finds out that the point has a negative value, color of the point will change to red.  
+Black line is describes what perceptron thinks (where could be the yellow line).
 
 How to run the demo:
 - download project
