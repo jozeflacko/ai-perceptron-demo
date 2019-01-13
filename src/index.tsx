@@ -27,7 +27,6 @@ class Main extends Component {
 
   componentDidMount() {    
     this.redrawCanvas();
-    this.animateTrainingFor10Seconds();
   }
 
   private drawAllPoints(): void {
@@ -103,10 +102,10 @@ class Main extends Component {
     this.canvas.drawLine(start, end, 'black');
   }
 
-  private animateTrainingFor10Seconds() {
+  private animateTrainingFor10Seconds = () => {
     const train = this.trainPerceptorAndRepaintAllPoints;
     const interval = setInterval(train,300);
-    setTimeout(()=> { clearInterval(interval); },10000);
+    setTimeout(()=> { clearInterval(interval); }, 10000);
   }
 
   private setRandomInitialWeightsForFunctionLine(): void {
@@ -123,23 +122,15 @@ class Main extends Component {
   render() {
     return (
       <div className="App">
-        <h1>This is demo describing how a perceptron in neural networks work</h1>
-        <p>There are many point on the canvas. Some of them have positive value and some negative.
-          Value depends whether a point is above or below a yellow random line crossing the canvas.
+        <h1>This is a demo project describing how perceptron in Neural Networks works</h1>
+        <p>This project is written in React and TypeScript.<br/><br/>
+          <b>What is this demo doing:</b><br/>
+          There are many points on the canvas. Some of them have positive value and some negative value. Value of each perceptron depends whether its position is above or below a yellow line.<br/><br/>
+          We are going to train exactly 1 perceptron for about 10 seconds. Task of this perceptron is to find whether point has positive or negative value. Points at the begining are grey. When perceptron correctly finds out that point has positive value, color of the point will change to green. When the perceptron finds out that the point has a negative value, color of the point will change to red.
+Black line is describes what perceptron thinks (where could be the yellow line).
         </p>
-        <p>
-          We are going to train a perceptron to find out when the value of the point is positive and when not. 
-          Points at the begining are grey. 
-          <ul>
-            <li>When perceptron correctly finds out that point had positive value, then 
-          the color of the point will be green.</li>  
-            <li>When the perceptring finds out that the point has a negative value,
-           then the color will be red.  </li>  
-          </ul> 
-          <p>Black line is showing what perceptron thinks (that where could be the yellow line).
-            Training will last 10 seconds
-          </p>
-        </p>  
+        <button onClick={this.animateTrainingFor10Seconds}>Start the training</button>          
+        <br/><br/>
         <canvas 
           id="myCanvas" 
           width={this.canvas.getDimentions().width} 
