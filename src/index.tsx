@@ -10,7 +10,7 @@ import * as math from './utils';
 class Main extends Component {
   
   private static readonly NUMBER_OF_WEIGHTS = 3; // should be the same as how many coordinated we have in a point: x,y + bias
-  private static readonly NUMBER_OF_POINTS = 300; 
+  private static readonly NUMBER_OF_POINTS = 1500; 
   private canvas: Canvas;
   private perceptron: Perceptron;
   private points: Point[] = [];
@@ -22,25 +22,30 @@ class Main extends Component {
     this.canvas = new Canvas(React.createRef<HTMLCanvasElement>(), 640, 640); // size of the canvas is 640x640
     this.setRandomInitialWeightsForFunctionLine();
     this.perceptron = new Perceptron(Main.NUMBER_OF_WEIGHTS);  // we will have only 1 perceptron
-    this.points = this.createPoints(Main.NUMBER_OF_POINTS, this.canvas);    
+    this.points = this.createPoints(Main.NUMBER_OF_POINTS, this.canvas);  
+    console.log('const');  
   }
 
   componentDidMount() {    
-    this.redrawCanvas();
+    this.clearCanvas();
+    this.drawCardesianLines();
+    this.drawDivisionLine();   
+    this.drawAllPoints(false);    
   }
 
-  private drawAllPoints(): void {
+  private drawAllPoints(paintPoints: boolean): void {
     this.points.map((point:Point)=>{
-      point.drawPointOnCanvas();    
+      point.drawPointOnCanvas(paintPoints);    
     });    
   }
 
   private redrawCanvas() {
+    console.log('redraw');  
     this.clearCanvas();
     this.drawCardesianLines();
-    this.drawDivisionLine();   
-    this.drawAllPoints();
-    this.drawExpectedGuessedDivisionLine();  
+    this.drawDivisionLine();       
+    this.drawAllPoints(true);
+    this.drawExpectedGuessedDivisionLine();      
   }
 
   private trainPerceptorWithAllPoints() {
@@ -61,7 +66,7 @@ class Main extends Component {
     for(let i=0;i<howMany;i++) {
       const point: Point = new Point(canvas, this.functionForLine);
       
-      point.drawPointOnCanvas();
+      point.drawPointOnCanvas(false);
       points.push(point);
     }
     return points;
@@ -125,9 +130,17 @@ class Main extends Component {
         <h1>This is a demo project describing how perceptron in Neural Networks works</h1>
         <p>This project is written in React and TypeScript.<br/><br/>
           <b>What is this demo doing:</b><br/>
-          There are many points on the canvas. Some of them have positive value and some negative value. Value of each perceptron depends whether its position is above or below a yellow line.<br/><br/>
-          We are going to train exactly 1 perceptron for about 10 seconds. Task of this perceptron is to find whether point has positive or negative value. Points at the begining are grey. When perceptron correctly finds out that point has positive value, color of the point will change to green. When the perceptron finds out that the point has a negative value, color of the point will change to red.
-Black line is describes what perceptron thinks (where could be the yellow line).
+          There are many points on the canvas. Some of them have positive value and some negative value.<br/> Value of each perceptron depends whether its position is above or below a yellow line.<br/><br/>
+          We are going to train exactly 1 perceptron for about 10 seconds. <br/>Task of this perceptron is to find whether point has positive or negative value. <br/>
+        </p>
+          <ul>
+            <li style={{"color":"#777"}}>Initially points have all grey color</li>            
+            <li style={{"color":"green"}}>When perceptron correctly finds that point has positive value, color of the point will change to green.</li>
+            <li style={{"color":"red"}}>When the perceptron finds that the point has a negative value, color of the point will change to red.</li>          
+          </ul> 
+        <p>
+          Black line will describe what perceptron thinks (where could be the yellow line).
+          Click start button to begin the training
         </p>
         <button onClick={this.animateTrainingFor10Seconds}>Start the training</button>          
         <br/><br/>

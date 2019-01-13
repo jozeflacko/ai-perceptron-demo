@@ -56,7 +56,7 @@ export default class Canvas {
     }
     drawDot(coordinate: Coordinate, color:string):void {    
         const borderColor: string = "white";
-        const radius: number = 5;
+        const radius: number = 3;
         
         const canvasObject = this.getObject();   
         if(canvasObject) {

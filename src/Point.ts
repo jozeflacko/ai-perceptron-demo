@@ -17,10 +17,7 @@ export default class Point {
         this.canvas = canvas;
         this.coordinate = new Coordinate(getRandomFloat(-1,1), getRandomFloat(-1,1));   
         const lineYvalueAtPoint = functionForLine(this.coordinate.getX());    
-        console.log('line height at position x'+lineYvalueAtPoint);
         this.trueValue = lineYvalueAtPoint < this.coordinate.getY() ? Sign.positive : Sign.negative;
-        console.log('point is above line: '+this.trueValue);
-        console.log('point at position: '+this.coordinate.getX() + ":" + this.coordinate.getY())
         this.predicatedValue = this.generateRandomPredicatedValue();
         this.bias = 1 // always equal to 1
     }
@@ -31,9 +28,9 @@ export default class Point {
         return getRandomFloat(-1,1) >= 0 ? Sign.positive : Sign.negative;
     }
 
-    public drawPointOnCanvas() {
+    public drawPointOnCanvas(paintPoints: boolean = true) {
         if(this.canvas) {
-            this.canvas.drawDot(this.coordinate, this.getColorDependingIfPredictionWasSameAsTrueValue());
+            this.canvas.drawDot(this.coordinate, this.getColorDependingIfPredictionWasSameAsTrueValue(paintPoints));
         }        
     }
 
@@ -43,8 +40,8 @@ export default class Point {
 
     // green - prediction was correct
     // red - prediction was false
-    public getColorDependingIfPredictionWasSameAsTrueValue(): string {       
-        if(this.getTrueValue() === this.getPredicatedValue()) {
+    public getColorDependingIfPredictionWasSameAsTrueValue(paintPoints:boolean = true): string {       
+        if(paintPoints === true && this.getTrueValue() === this.getPredicatedValue()) {
             if(this.getTrueValue() === 1) {
                 return "green";
             } else {
