@@ -17,7 +17,7 @@ When the perceptron finds that the point has a negative value, color of the poin
 
 Black line will describe what perceptron thinks (where could be the yellow line). Click start button to begin the training
 
-How to run the demo:
+### How to run the demo:
 - download project
 - run npm install 
 - run npm start
