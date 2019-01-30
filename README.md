@@ -1,6 +1,6 @@
 # Perceptron Demo
 
-This is a demo project describing how perceptron in Neural Networks works.It it made in TypeScript (JavaScript) language
+This is a demo project describing how perceptron in Neural Networks works. It it made in TypeScript (JavaScript) language
 
 ## Getting Started
 
