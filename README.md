@@ -2,11 +2,11 @@
 
 This is a demo project describing how perceptron in Neural Networks works. It it made in TypeScript (JavaScript) language
 
-## Getting Started
+## Trying out
 
 You can try it out here: <a href='http://perceptron-demo.jozeflacko.com'>perceptron-demo.jozeflacko.com</a>
 
-* This app is hosted at heroku cloud platform and it can take up to 10 seconds to wake up this page :)
+* This app is hosted at heroku cloud platform and it can take up to 10 seconds to wake it up :)
 
 ### What is this demo doing:
 
