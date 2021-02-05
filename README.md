@@ -31,7 +31,7 @@ Black line will describe what perceptron thinks (where could be the yellow line)
 
 ## Authors
 
-* **Jozef Lacko** - *Initial work* - [Jozef Lacko](https://www.jozeflacko.com)
+* **Jozef Lacko** - *Initial work* - [Jozef Lacko](http://jozeflacko.github.io/)
 
 ## Acknowledgments
 
